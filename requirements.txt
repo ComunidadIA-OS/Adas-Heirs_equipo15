@@ -1,0 +1,31 @@
+# Núcleo
+numpy
+pyyaml
+opencv-python
+python-dotenv
+
+# Planos
+scenedetect[opencv]
+
+# Detección (torchvision, BSD) — en la GPU de OVH instalad la versión con CUDA
+torch
+torchvision
+
+# Tracking: ByteTrack de 'trackers' (Apache-2.0) + 'supervision' (MIT) para las estructuras de detección
+trackers
+supervision
+
+# Análisis facial (código MIT; modelos preentrenados de uso NO comercial, se descargan aparte)
+insightface
+onnxruntime        # en GPU: onnxruntime-gpu
+
+# Demo y análisis
+streamlit
+pandas
+matplotlib
+
+# LLM opcional vía OVH AI Endpoints (API compatible con OpenAI)
+openai
+
+# Tests
+pytest

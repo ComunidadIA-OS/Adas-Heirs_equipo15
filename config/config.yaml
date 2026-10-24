@@ -1,0 +1,53 @@
+# Configuración central del pipeline.
+# Cambiar un modelo o un umbral = cambiar este fichero, no el código.
+
+paths:
+  videos: data/videos
+  outputs: outputs           # se crea outputs/<nombre_video>/ con los JSON de cada etapa
+  annotations: data/annotations
+
+video:
+  fps_sample: 2              # frames analizados por segundo (2–5 suele bastar)
+  max_side: 1280             # redimensiona el lado mayor si el vídeo es más grande (0 = no tocar)
+
+shots:
+  enabled: true
+  threshold: 27.0            # sensibilidad de PySceneDetect (más bajo = más cortes)
+  min_shot_s: 1.0
+
+detection:
+  model: torchvision_fasterrcnn   # opciones: torchvision_fasterrcnn (BSD). Añadid otras en src/detection.py
+  min_score: 0.6
+  min_box_ratio: 0.005       # descarta personas que ocupan < 0.5 % de la imagen
+  device: auto               # auto | cpu | cuda
+
+tracking:
+  model: bytetrack           # trackers.ByteTrackTracker (Apache-2.0)
+  activation_threshold: 0.6  # confianza mínima para empezar una trayectoria nueva
+  lost_track_buffer: 4       # frames muestreados que se "espera" a una persona que desaparece
+  min_track_frames: 3        # trayectorias más cortas se descartan como ruido
+
+faces:
+  model: insightface         # opciones: insightface | none
+  every_n_frames: 1          # analizar la cara en 1 de cada N observaciones del track
+  min_face_score: 0.5
+  device: auto
+
+aggregation:
+  vote_threshold: 0.8        # % mínimo de votos coincidentes para asignar etiqueta
+  min_votes: 3               # si hay menos caras clasificadas -> "no_determinado"
+
+metrics:
+  edge_fraction: 0.1         # "aparece al principio/final" = en el primer/último 10 % del vídeo
+  protagonist_threshold: 0.5 # índice >= umbral -> se cuenta como protagonista
+  # Pesos del índice de protagonismo (se normalizan para que sumen 1). JUSTIFICADLOS en docs/metricas.md
+  weights:
+    screen_time: 0.30
+    size: 0.20
+    centrality: 0.15
+    solo: 0.20
+    edges: 0.15
+
+llm:                          # opcional, por si usáis un LLM vía OVH AI Endpoints
+  enabled: false
+  model: ""                   # nombre del catálogo de OVH; debe poder cambiarse por cualquier modelo abierto
