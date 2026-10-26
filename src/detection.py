@@ -18,14 +18,18 @@ class TorchvisionFasterRCNN:
 
     PERSON_LABEL = 1
 
-    def __init__(self, min_score=0.6, device="auto"):
+    def __init__(self, min_score=0.6, device="auto", light=False):
         import torch
-        from torchvision.models.detection import (FasterRCNN_ResNet50_FPN_V2_Weights,
-                                                  fasterrcnn_resnet50_fpn_v2)
+        from torchvision.models import detection as tvd
         self.torch = torch
         self.device = resolve_device(device)
-        weights = FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
-        self.model = fasterrcnn_resnet50_fpn_v2(weights=weights).to(self.device).eval()
+        if light:   # MobileNetV3: mucho más rápido en CPU, algo menos preciso
+            weights = tvd.FasterRCNN_MobileNet_V3_Large_FPN_Weights.DEFAULT
+            model = tvd.fasterrcnn_mobilenet_v3_large_fpn(weights=weights)
+        else:       # ResNet50 v2: preciso, pensado para GPU
+            weights = tvd.FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
+            model = tvd.fasterrcnn_resnet50_fpn_v2(weights=weights)
+        self.model = model.to(self.device).eval()
         self.min_score = min_score
 
     def detect(self, frame_bgr):
@@ -46,6 +50,9 @@ def get_detector(cfg):
     det_cfg = cfg["detection"]
     if det_cfg["model"] == "torchvision_fasterrcnn":
         return TorchvisionFasterRCNN(min_score=det_cfg["min_score"], device=det_cfg["device"])
+    if det_cfg["model"] == "torchvision_fasterrcnn_mobilenet":
+        return TorchvisionFasterRCNN(min_score=det_cfg["min_score"], device=det_cfg["device"],
+                                     light=True)
     raise ValueError(f"Detector desconocido: {det_cfg['model']}")
 
 

@@ -5,6 +5,14 @@ from pathlib import Path
 
 import yaml
 
+# Límite de segundos a analizar (0 = vídeo entero). Lo fija pipeline.py desde video.max_seconds.
+MAX_SECONDS = 0
+
+
+def set_max_seconds(seconds):
+    global MAX_SECONDS
+    MAX_SECONDS = float(seconds or 0)
+
 
 def load_config(path="config/config.yaml"):
     with open(path, "r", encoding="utf-8") as f:
@@ -51,6 +59,9 @@ def video_info(video_path):
     }
     cap.release()
     info["duration_s"] = info["n_frames"] / info["fps"] if info["fps"] else 0.0
+    if MAX_SECONDS and info["duration_s"] > MAX_SECONDS:
+        info["duration_s"] = MAX_SECONDS
+        info["n_frames"] = int(MAX_SECONDS * info["fps"])
     return info
 
 
@@ -65,6 +76,8 @@ def iter_frames(video_path, fps_sample, max_side=0):
     step = max(1, round(native_fps / fps_sample))
     idx = 0
     while True:
+        if MAX_SECONDS and idx / native_fps >= MAX_SECONDS:
+            break
         ok = cap.grab()
         if not ok:
             break

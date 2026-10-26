@@ -12,7 +12,7 @@ Cada etapa guarda su JSON en outputs/<nombre_video>/. Si el JSON ya existe, la e
 import argparse
 
 from . import aggregation, detection, faces, metrics, shots, tracking
-from .utils import load_config, video_outdir
+from .utils import load_config, set_max_seconds, video_outdir
 
 STEPS = [
     ("shots", shots, "planos.json"),
@@ -34,6 +34,9 @@ def main():
     args = parser.parse_args()
 
     cfg = load_config(args.config)
+    set_max_seconds(cfg["video"].get("max_seconds", 0))
+    if cfg["video"].get("max_seconds"):
+        print(f"Modo prueba: solo se analizan los primeros {cfg['video']['max_seconds']} s")
     outdir = video_outdir(cfg, args.video)
     requested = None if args.steps == "all" else set(args.steps.split(","))
 

@@ -9,14 +9,17 @@ paths:
 video:
   fps_sample: 2              # frames analizados por segundo (2–5 suele bastar)
   max_side: 1280             # redimensiona el lado mayor si el vídeo es más grande (0 = no tocar)
+  max_seconds: 0             # 0 = vídeo entero. Para pruebas rápidas: 300 (= primeros 5 min)
 
 shots:
   enabled: true
-  threshold: 27.0            # sensibilidad de PySceneDetect (más bajo = más cortes)
+  detector: adaptive         # adaptive (recomendado) | content
+  luma_only: true            # solo brillo: necesario para películas en blanco y negro
+  threshold: 27.0            # solo para detector: content (más bajo = más cortes)
   min_shot_s: 1.0
 
 detection:
-  model: torchvision_fasterrcnn   # opciones: torchvision_fasterrcnn (BSD). Añadid otras en src/detection.py
+  model: torchvision_fasterrcnn   # torchvision_fasterrcnn (preciso, GPU) | torchvision_fasterrcnn_mobilenet (rápido, CPU)
   min_score: 0.6
   min_box_ratio: 0.005       # descarta personas que ocupan < 0.5 % de la imagen
   device: auto               # auto | cpu | cuda
@@ -28,7 +31,7 @@ tracking:
   min_track_frames: 3        # trayectorias más cortas se descartan como ruido
 
 faces:
-  model: insightface         # opciones: insightface | none
+  model: insightface         # insightface | none (none = sin análisis facial: todo sale "no_determinado")
   every_n_frames: 1          # analizar la cara en 1 de cada N observaciones del track
   min_face_score: 0.5
   device: auto

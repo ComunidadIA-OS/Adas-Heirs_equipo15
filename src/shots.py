@@ -4,6 +4,7 @@ Salida: planos.json
   {"video": ..., "duration_s": ..., "shots": [{"shot_id": 0, "start_s": 0.0, "end_s": 12.4}, ...]}
 """
 
+from . import utils
 from .utils import save_json, video_info
 
 
@@ -15,15 +16,22 @@ def detect_shots(video_path, cfg):
         return [{"shot_id": 0, "start_s": 0.0, "end_s": info["duration_s"]}]
 
     try:
-        from scenedetect import ContentDetector, detect
+        from scenedetect import AdaptiveDetector, ContentDetector, detect
     except ImportError:
         print("[shots] PySceneDetect no instalado: se trata el vídeo como un único plano.")
         return [{"shot_id": 0, "start_s": 0.0, "end_s": info["duration_s"]}]
 
+    min_len = int(shots_cfg["min_shot_s"] * info["fps"])
+    luma_only = shots_cfg.get("luma_only", True)   # True: mejor para cine en blanco y negro
+    if shots_cfg.get("detector", "adaptive") == "adaptive":
+        detector = AdaptiveDetector(min_scene_len=min_len, luma_only=luma_only)
+    else:
+        detector = ContentDetector(threshold=shots_cfg["threshold"], min_scene_len=min_len,
+                                   luma_only=luma_only)
     scenes = detect(
         str(video_path),
-        ContentDetector(threshold=shots_cfg["threshold"],
-                        min_scene_len=int(shots_cfg["min_shot_s"] * info["fps"])),
+        detector,
+        end_time=utils.MAX_SECONDS or None,
     )
     if not scenes:
         return [{"shot_id": 0, "start_s": 0.0, "end_s": info["duration_s"]}]
