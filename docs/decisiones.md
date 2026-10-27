@@ -12,6 +12,10 @@ para la rendición de cuentas y para no repetir discusiones.
 | 2026-10-24 | 17 películas y no 200 | Representatividad: es un estudio exploratorio; coste de GPU; tiempo de anotación | Equipo |
 | 2026-10-24 | Detector torchvision (BSD) en vez de YOLO Ultralytics (AGPL) | Compatibilidad con licencia MIT del repo | Equipo |
 | 2026-10-24 | Votación por trayectoria con umbral 80 % y clase `no_determinado` | El clasificador falla en frames sueltos | Equipo |
+| 2026-10-26 | Detección de planos solo por brillo (`luma_only`, AdaptiveDetector) | Con color no detectaba ningún corte en películas en blanco y negro | Equipo |
+| 2026-10-27 | Análisis de caras en GPU con onnxruntime-gpu 1.22.0 | La versión para CUDA 13 no soporta las V100S; por CPU tardaba ~3 h por película | Equipo |
+| 2026-10-27 | Votación: umbral 70 % y mínimo 2 caras (antes 80 % y 3) | Análisis de sensibilidad con 6 películas: el tiempo sin determinar baja 6–11 puntos y el % de mujeres cambia menos de 2 puntos | Equipo |
+| 2026-10-27 | *The General* marcada como dudosa | 84 % de mujeres en una película con un solo papel femenino relevante: el modelo falla con cine mudo de baja calidad. Pendiente de confirmar con anotación | Equipo |
 
 ## Backlog (ideas para después, priorizadas)
 

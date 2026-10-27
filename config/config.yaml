@@ -37,8 +37,8 @@ faces:
   device: auto               # GPU con onnxruntime-gpu==1.22.0 (CUDA 12). Las versiones para CUDA 13 no soportan las V100S
 
 aggregation:
-  vote_threshold: 0.8        # % mínimo de votos coincidentes para asignar etiqueta
-  min_votes: 3               # si hay menos caras clasificadas -> "no_determinado"
+  vote_threshold: 0.7        # % mínimo de votos coincidentes (antes 0.8; ver análisis de sensibilidad del 27/10)
+  min_votes: 2               # si hay menos caras clasificadas -> "no_determinado" (antes 3)
 
 metrics:
   edge_fraction: 0.1         # "aparece al principio/final" = en el primer/último 10 % del vídeo
