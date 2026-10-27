@@ -90,7 +90,9 @@ def main():
     salida = carpeta / f"revision_{nombre}.mp4"
     escritor = cv2.VideoWriter(str(salida), cv2.VideoWriter_fourcc(*"mp4v"), fps, (ancho, alto))
 
-    # Entre dos fotogramas analizados se mantienen las últimas cajas vistas
+    # El pipeline analiza 1 de cada 'paso' fotogramas (fps_sample por segundo). Entre dos fotogramas
+    # analizados se mantienen las cajas del último analizado; si en él no había nadie, no se dibuja nada.
+    paso = max(1, round(fps / tracks["fps_sample"]))
     ultimas = []
     vistos = defaultdict(int)
     idx = primero
@@ -98,8 +100,8 @@ def main():
     while seguir:
         ok, frame = cap.read()
         if ok and idx <= ultimo:
-            if idx in por_frame:
-                ultimas = por_frame[idx]
+            if idx % paso == 0:
+                ultimas = por_frame.get(idx, [])
                 for o in ultimas:
                     vistos[o["track_id"]] += 1
             segundo = idx / fps
