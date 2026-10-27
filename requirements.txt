@@ -17,7 +17,7 @@ supervision
 
 # Análisis facial (código MIT; modelos preentrenados de uso NO comercial, se descargan aparte)
 insightface
-onnxruntime        # en GPU: onnxruntime-gpu
+onnxruntime        # en GPU (OVH, V100S): onnxruntime-gpu==1.22.0 (versión para CUDA 12)
 
 # Demo y análisis
 streamlit
