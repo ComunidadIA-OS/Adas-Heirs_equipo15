@@ -2,7 +2,6 @@
 numpy
 pyyaml
 opencv-python
-python-dotenv
 
 # Planos
 scenedetect[opencv]
@@ -23,6 +22,9 @@ onnxruntime        # en GPU (OVH, V100S): onnxruntime-gpu==1.22.0 (versión para
 streamlit
 pandas
 matplotlib
+
+# Modelo de visión (género percibido) vía OVH AI Endpoints (API compatible con OpenAI)
+requests            # Apache-2.0; lo usa src/vlm.py
 
 # LLM opcional vía OVH AI Endpoints (API compatible con OpenAI)
 openai

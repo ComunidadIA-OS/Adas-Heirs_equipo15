@@ -16,3 +16,6 @@ models/
 # Sistema
 .DS_Store
 Thumbs.db
+
+*.bak
+*.bak_vlm

@@ -43,9 +43,23 @@ comprobad la licencia y poned `licencia_verificada = si`.
 
 - https://github.com/joojs/fairface — 108.501 imágenes de caras equilibradas por grupo, con género y
   edad. Licencia CC BY 4.0.
-- Uso: medir si el clasificador de género percibido falla más con algún grupo.
-- Limitación: sus etiquetas también son binarias y percibidas.
+- **No se ha utilizado en este reto.** Evaluamos el género percibido directamente sobre nuestro dominio
+  (cine antiguo, 94 personas anotadas a mano), porque un conjunto de fotos modernas no refleja la
+  calidad del material. Queda como trabajo futuro para medir el sesgo por edad y tono de piel.
 
 ## Ground truth propio
 
-`data/annotations/anotaciones.csv` — anotado a mano por el equipo (ver README de esa carpeta).
+`data/annotations/anotaciones.csv` — anotado a mano por el equipo (ver README de esa carpeta):
+94 personas en 3 películas de épocas distintas (*The General*, muda, 1926; *A Star Is Born*, color, 1937;
+*Detour*, blanco y negro sonoro, 1945). Se anota el género **percibido** y si la persona es protagonista del plano.
+
+## Modelos de terceros usados en la evaluación del género
+
+| Modelo | Uso | Licencia |
+|---|---|---|
+| Qwen2.5-VL-72B-Instruct (vía OVHcloud AI Endpoints) | Género percibido a partir de un recorte de la persona | Licencia propia de Qwen: pesos abiertos, **no es OSI**; permite uso comercial con condiciones |
+| Mistral-Small-3.2-24B-Instruct (probado, no elegido) | Alternativa evaluada | Apache-2.0 |
+| InsightFace (modelos `buffalo_l`) | Respaldo facial | Uso **no comercial** |
+
+El modelo de visión es sustituible por cualquiera compatible con la API de OpenAI (`vlm.model` en
+`config/config.yaml`). Los recortes que se envían a la API no se guardan en el repositorio.

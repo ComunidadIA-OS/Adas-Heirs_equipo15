@@ -50,6 +50,8 @@ def run(video_path, cfg, outdir):
     track_ids = {o["track_id"] for o in tracks["observations"]}
     acfg = cfg["aggregation"]
     personas = aggregate(track_ids, faces, acfg["vote_threshold"], acfg["min_votes"])
+    from .vlm import combine
+    personas = combine(personas, outdir, cfg)
     save_json({"personas": personas}, outdir / "personas.json")
     counts = Counter(p["label"] for p in personas)
     print(f"[aggregation] {dict(counts)}")

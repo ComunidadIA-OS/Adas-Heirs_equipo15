@@ -11,7 +11,7 @@ Cada etapa guarda su JSON en outputs/<nombre_video>/. Si el JSON ya existe, la e
 
 import argparse
 
-from . import aggregation, detection, faces, metrics, shots, tracking
+from . import aggregation, detection, faces, metrics, shots, tracking, vlm
 from .utils import load_config, set_max_seconds, video_outdir
 
 STEPS = [
@@ -19,6 +19,7 @@ STEPS = [
     ("detection", detection, "detecciones.json"),
     ("tracking", tracking, "tracks.json"),
     ("faces", faces, "caras.json"),
+    ("vlm", vlm, "vlm.json"),
     ("aggregation", aggregation, "personas.json"),
     ("metrics", metrics, "metricas.json"),
 ]

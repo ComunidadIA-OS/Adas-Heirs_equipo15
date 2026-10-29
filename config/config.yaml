@@ -54,3 +54,13 @@ metrics:
 llm:                          # opcional, por si usáis un LLM vía OVH AI Endpoints
   enabled: false
   model: ""                   # nombre del catálogo de OVH; debe poder cambiarse por cualquier modelo abierto
+
+vlm:                          # modelo de visión como opinión principal de género percibido
+  enabled: true
+  model: Qwen2.5-VL-72B-Instruct     # cualquier modelo de visión del catálogo de OVH AI Endpoints
+  base_url: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
+  token_env: OVH_AI_TOKEN     # nombre de la variable de entorno con el token (NUNCA el token aquí)
+  crops_per_track: 6          # recortes enviados por persona
+  workers: 6                  # llamadas en paralelo
+  vote_threshold: 0.6         # % mínimo de votos coincidentes
+  min_votes: 2                # votos mínimos de mujer/hombre

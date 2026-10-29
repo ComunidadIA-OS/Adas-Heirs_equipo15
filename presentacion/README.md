@@ -30,10 +30,10 @@ Versión corta (5 min con demo) antes del evento del 4/11.
 
 | Tiempo | Contenido | Quién |
 |---|---|---|
-| 0:00–0:30 | Gancho + problema | <!-- TODO --> |
-| 0:30–1:30 | Métricas | |
-| 1:30–3:00 | Cómo funciona + demo | |
-| 3:00–4:00 | Resultados + perspectiva de género + ética | |
-| 4:00–5:00 | Despliegue + cierre y llamada a la acción | |
+| 0:00–0:30 | Gancho + problema | Luna |
+| 0:30–1:30 | Métricas | Luna |
+| 1:30–3:00 | Cómo funciona + demo | Kyara |
+| 3:00–4:00 | Resultados + perspectiva de género + ética | Judith |
+| 4:00–5:00 | Despliegue + cierre y llamada a la acción | Luna |
 
 Ensayad el tiempo. Que hablen las tres.
