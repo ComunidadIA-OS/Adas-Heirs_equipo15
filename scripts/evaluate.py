@@ -8,8 +8,7 @@ El CSV de anotaciones tiene: video_id, track_id, genero_percibido, protagonista,
 (la predicción automática, NO la revisada).
 
 Muestra matriz de confusión y precisión / recall / F1 por clase.
-Recordad: con clases desbalanceadas la accuracy engaña; mirad precisión y recall.
-"""
+
 
 import argparse
 import csv
