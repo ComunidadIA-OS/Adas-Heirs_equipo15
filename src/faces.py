@@ -1,10 +1,10 @@
 """Etapa 4 — Análisis facial dentro de cada persona seguida: género PERCIBIDO y edad estimada.
 
-IMPORTANTE (licencias y ética):
-- El código de InsightFace es MIT, pero sus modelos preentrenados son de USO NO COMERCIAL.
-  No se incluyen en el repo: se descargan automáticamente la primera vez. Documentadlo en el README.
-- Las caras se procesan en memoria y se descartan: NO se guardan recortes ni embeddings faciales.
-- La salida es "género percibido por un modelo", no identidad de género.
+Licencias y privacidad:
+- El código de InsightFace es MIT, pero sus modelos preentrenados son de uso no comercial.
+  No se incluyen en el repositorio; se descargan la primera vez.
+- Las caras se procesan en memoria y se descartan: no se guardan recortes ni embeddings.
+- La salida es el género percibido por un modelo, no la identidad de género.
 
 Salida: caras.json
   {"observations": [{"frame": 0, "track_id": 10001, "gender": "mujer"|"hombre"|null,
