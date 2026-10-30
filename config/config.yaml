@@ -43,7 +43,7 @@ aggregation:
 metrics:
   edge_fraction: 0.1         # "aparece al principio/final" = en el primer/último 10 % del vídeo
   protagonist_threshold: 0.5 # índice >= umbral -> se cuenta como protagonista
-  # Pesos del índice de protagonismo (se normalizan para que sumen 1). JUSTIFICADLOS en docs/metricas.md
+  # Pesos del índice de protagonismo (se normalizan para que sumen 1). 
   weights:
     screen_time: 0.30
     size: 0.20
